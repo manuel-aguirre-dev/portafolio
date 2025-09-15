@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); width: 100%; }
+    .sidebar.active { transform: translateX(0); }
+    .main-content { margin-left: 0; padding: 1rem; }
+
+    .mobile-menu-btn {
+        position: fixed; top: 1rem; left: 1rem; z-index: 200;
+        background: #4ecdc4; color: white; border: none;
+        padding: 1rem; border-radius: 50%;
+        cursor: pointer; display: block;
+    }
+}
+
+.mobile-menu-btn { display: none; }

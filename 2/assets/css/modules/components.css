@@ -1,0 +1,39 @@
+.profile-section { text-align: center; margin-bottom: 3rem; }
+
+.profile-image {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: linear-gradient(45deg, #ff6b9d, #4ecdc4);
+    margin: 0 auto 1rem; display: flex; align-items: center;
+    justify-content: center; font-size: 3rem; color: white;
+    box-shadow: 0 8px 32px rgba(255, 107, 157, 0.3);
+}
+
+.profile-name { font-size: 1.4rem; font-weight: bold; color: #4ecdc4; margin-bottom: 0.5rem; }
+.profile-title { font-size: 0.9rem; color: #a0a0a0; line-height: 1.4; }
+
+.cv-button {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    color: white; padding: 1rem; border: none; border-radius: 10px;
+    font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 2rem;
+    transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;
+}
+
+.cv-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
