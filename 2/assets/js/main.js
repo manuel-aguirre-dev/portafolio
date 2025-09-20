@@ -336,6 +336,29 @@ document.addEventListener("click", function(e) {
     }
 });
 
+const audio = new Audio("/2/assets/sounds/fondo.mp3"); // reemplaza con tu audio o video oculto
+const musicBtn = document.getElementById("musicToggle");
+
+audio.loop = true; // que se repita automáticamente
+
+window.addEventListener('click', () => {
+    if (!musicBtn.checked) {
+        audio.play();
+        musicBtn.checked = true;
+    }
+}, { once: true });
+
+
+// Toggle cuando se hace click
+musicBtn.addEventListener("change", () => {
+  if (musicBtn.checked) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+});
+
+
 console.log('Portafolio cargado correctamente');
 console.log('Tip: Prueba usar las flechas del teclado para navegar');
 console.log('Easter egg: El form no funciona jeje');

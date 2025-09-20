@@ -54,11 +54,12 @@
                     Contacto
                 </a>
             </li>
+
         </ul>
 
         <div class="cv-dropdown">
-            <button class="cv-button" alingn="center"">
-                <i class=" fas fa-download"></i> Sobre mi CV ▾
+            <button class="cv-button" align="center">
+                <i class=" fas fa-download"></i> Mi CV
             </button>
             <div class="cv-dropdown-content">
                 <a href="https://docs.google.com/document/d/1ph12GU5DVUl8-pZ_RoI6ZEy6tBybuxyL/view?usp=sharing"
@@ -124,6 +125,15 @@
                 <i class="fab fa-instagram"></i>
             </a>
         </div>
+
+        <div class="music-container" style="margin-top: 3rem;">
+            <label>
+                <input class="play-btn" type="checkbox" id="musicToggle">
+                <div class="play-icon"></div>
+                <div class="pause-icon"></div>
+            </label>
+        </div>
+
     </nav>
 
     <main class="main-content">
@@ -157,65 +167,126 @@
         <section class="content-section" id="portfolio">
             <h1 class="section-title">Portfolio</h1>
             <div class="project-grid">
-
-                <!-- Kiosko Virtual -->
                 <div class="project-card">
-                    <h3 style="color: #4ecdc4; margin-bottom: 1rem;">Kiosko Virtual</h3>
-                    <p style="margin-bottom: 1rem;">
-                        Proyecto de transformación digital en retail, desarrollado en 2 meses y medio. Aplicación web
-                        con gestión de ofertas y expansión al mayoreo.
-                    </p>
-                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-                        <span
-                            style="background: rgba(78, 205, 196, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">PHP</span>
-                        <span
-                            style="background: rgba(255, 107, 157, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">JavaScript</span>
-                        <span
-                            style="background: rgba(255, 193, 7, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">TailwindCSS</span>
-                        <span
-                            style="background: rgba(0, 150, 136, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Prisma</span>
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+
+                        <div class="project-info">
+                            <h3>Kiosko Virtual Escolar</h3>
+                            <div class="project-status">
+                                <span class="status-badge completed">✓ Completado</span>
+                                <span class="featured-badge">🏆</span>
+                            </div>
+                        </div>
                     </div>
-                    <a href="#" style="color: #4ecdc4; text-decoration: none;">Ver proyecto <i
-                            class="fas fa-external-link-alt"></i></a>
+                    <p class="project-description">
+                        <span class="highlight">Kiosko Virtual</span> es una <span class="highlight-green">aplicación
+                            web</span> que transformó la compra en kioskos escolares, eliminando filas y agilizando
+                        pedidos. Incluye pagos integrados wallet´s, notificaciones en tiempo real y una
+                        plataforma modular que permite escalabilidad y una experiencia de usuario fluida como
+                        satisfactoria.
+                    </p>
+                    <div class="technologies-section">
+                        <h4><i class="fas fa-wrench"></i> Tecnologías:</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag html">HTML5</span>
+                            <span class="tech-tag css">TailwindCSS</span>
+                            <span class="tech-tag js">JavaScript</span>
+                            <span class="tech-tag node">Node.js</span>
+                            <span class="tech-tag mysql">MySQL</span>
+                            <span class="tech-tag mp">Mercado Pago</span>
+                            <span class="tech-tag websocket">WebSocket</span>
+                            <span class="tech-tag bootstrap">Bootstrap</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="#" class="action-btn primary">
+                            <i class="fab fa-github"></i> Ver en GitHub
+                        </a>
+                        <a href="#" class="action-btn secondary">
+                            <i class="fas fa-external-link-alt"></i> Demo Live
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Portfolio Web -->
                 <div class="project-card">
-                    <h3 style="color: #4ecdc4; margin-bottom: 1rem;">Portfolio Personal</h3>
-                    <p style="margin-bottom: 1rem;">
-                        Mi portafolio web, creado con React y TailwindCSS. Presenta navegación dinámica y proyectos
-                        interactivos.
-                    </p>
-                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-                        <span
-                            style="background: rgba(78, 205, 196, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">React</span>
-                        <span
-                            style="background: rgba(255, 107, 157, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">TailwindCSS</span>
-                        <span
-                            style="background: rgba(255, 193, 7, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">JavaScript</span>
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="project-info">
+                            <h3>Portafolio Personal</h3>
+                            <div class="project-status">
+                                <span class="status-badge in-progress">⚡ En Desarrollo</span>
+                            </div>
+                        </div>
                     </div>
-                    <a href="#" style="color: #4ecdc4; text-decoration: none;">Ver proyecto <i
-                            class="fas fa-external-link-alt"></i></a>
+                    <p class="project-description">
+                        <span class="highlight">Portafolio web personal</span> desarrollado como una experiencia. Diseño
+                        dinámico con navegación fluida, <span class="highlight-green">interfaz adaptable.</span> Incluye
+                        integración con repositorios y contacto directo, con una estructura organizada que facilita la
+                        exploración de mi persona.
+                    </p>
+
+
+                    <div class="technologies-section">
+                        <h4><i class="fas fa-wrench"></i> Tecnologías:</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag html">HTML5</span>
+                            <span class="tech-tag css">TailwindCSS</span>
+                            <span class="tech-tag js">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="#" class="action-btn primary">
+                            <i class="fab fa-github"></i> Ver en GitHub
+                        </a>
+                        <a href="#" class="action-btn secondary">
+                            <i class="fas fa-external-link-alt"></i> Demo Live
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Gestor de viajes de aviones -->
                 <div class="project-card">
-                    <h3 style="color: #4ecdc4; margin-bottom: 1rem;">Gestor de Viajes de Aviones</h3>
-                    <p style="margin-bottom: 1rem;">
-                        aplicación web para gestionar vuelos, reservas y rutas aéreas, con enfoque en
-                        experiencia de usuario y eficiencia en la gestión de datos.
-                    </p>
-                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
-                        <span
-                            style="background: rgba(78, 205, 196, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">React</span>
-                        <span
-                            style="background: rgba(255, 107, 157, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Node.js</span>
-                        <span
-                            style="background: rgba(255, 193, 7, 0.2); padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">Prisma</span>
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="project-info">
+                            <h3>Gestor de Viajes Aéreos</h3>
+                            <div class="project-status">
+                                <span class="status-badge in-progress">⚡ En Desarrollo</span>
+                            </div>
+                        </div>
                     </div>
-                    <a href="#" style="color: #4ecdc4; text-decoration: none;">Ver proyecto <i
-                            class="fas fa-external-link-alt"></i> (próximamente)</a>
+                    <p class="project-description">
+                        Plataforma para planificar y gestionar <span class="highlight">viajes en avión</span>, con
+                        búsqueda de rutas, comparación de precios y <span class="highlight-green">reservas rápidas y
+                            seguras</span>. Su diseño modular e intuitivo permite una navegación fluida, seguimiento de
+                        vuelos y una experiencia de usuario optimizada para futuras ampliaciones.
+                    </p>
+
+                    <div class="technologies-section">
+                        <h4><i class="fas fa-wrench"></i> Tecnologías:</h4>
+                        <div class="tech-tags">
+                            <span class="tech-tag react">React.js</span>
+                            <span class="tech-tag tailwind">TailwindCSS</span>
+                            <span class="tech-tag api">API Rest</span>
+                            <span class="tech-tag node">Node.js</span>
+                        </div>
+                    </div>
+                    <div class="project-actions">
+                        <a href="#" class="action-btn primary">
+                            <i class="fab fa-github"></i> Ver en GitHub
+                        </a>
+                        <a href="#" class="action-btn secondary">
+                            <i class="fas fa-eye"></i> Preview
+                        </a>
+                    </div>
                 </div>
+
 
             </div>
         </section>
