@@ -293,27 +293,6 @@ function showPreloader() {
 // Mostrar preloader al cargar
 showPreloader();
 
-// Easter egg - Konami Code
-let konamiCode = [];
-const konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-
-document.addEventListener('keydown', (e) => {
-    konamiCode.push(e.keyCode);
-    if (konamiCode.length > konami.length) {
-        konamiCode.shift();
-    }
-    
-    if (konamiCode.toString() === konami.toString()) {
-        // Easter egg activado
-        document.body.style.filter = 'hue-rotate(180deg)';
-        setTimeout(() => {
-            document.body.style.filter = 'none';
-        }, 3000);
-        
-        alert('🎉 ¡Easter egg activado! ¡Buen trabajo encontrándolo!');
-    }
-});
-
 // Toggle del menú del CV
 document.querySelector(".cv-button").addEventListener("click", function(e) {
     e.stopPropagation(); // evita cerrar inmediatamente
@@ -328,7 +307,7 @@ document.addEventListener("click", function(e) {
     }
 });
 
-const audio = new Audio("/assets/sounds/fondo.mp3");
+const audio = new Audio("./assets/sounds/fondo.mp3");
 const musicBtn = document.getElementById("musicToggle");
 
 audio.loop = true; // que se repita automáticamente
