@@ -1,5 +1,5 @@
 // Variables globales
-const sections = ['about', 'portfolio', 'education', 'skills', 'contact'];
+const sections = ['about', 'portfolio', 'education', 'skills', 'services'];
 let currentSectionIndex = 0;
 
 // Navegación del menú
@@ -74,14 +74,6 @@ function closeMobileMenu() {
     sidebar.classList.remove('active');
 }
 
-// Formulario de contacto
-document.querySelector('.contact-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    alert('¡Gracias por tu mensaje! Te contactaré pronto.');
-    this.reset();
-});
-
-
 // Enlaces de redes sociales
 document.querySelectorAll('.social-link').forEach(link => {
     link.addEventListener('click', function (e) {
@@ -94,7 +86,7 @@ document.querySelectorAll('.social-link').forEach(link => {
                 window.open('https://github.com/manuel-aguirre-dev', '_blank');
                 break;
                 case 'instagram':
-                    window.open('https://instagram.com/tu-usuario', '_blank');
+                    window.open('https://www.instagram.com/_aguirre_manuel_/', '_blank');
                     break;
                     default:
                         alert('Agrega tu enlace de red social aquí');
@@ -336,7 +328,7 @@ document.addEventListener("click", function(e) {
     }
 });
 
-const audio = new Audio("/2/assets/sounds/fondo.mp3"); // reemplaza con tu audio o video oculto
+const audio = new Audio("/assets/sounds/fondo.mp3");
 const musicBtn = document.getElementById("musicToggle");
 
 audio.loop = true; // que se repita automáticamente
