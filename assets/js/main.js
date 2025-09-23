@@ -77,32 +77,32 @@ function closeMobileMenu() {
 // Enlaces de redes sociales
 document.querySelectorAll('.social-link').forEach(link => {
     link.addEventListener('click', function (e) {
-    e.preventDefault();
-    switch (this.id) {
-        case 'linkedin':
-            window.open('https://www.linkedin.com/in/manuel-aguirre-4116-dev/', '_blank');
-            break;
+        e.preventDefault();
+        switch (this.id) {
+            case 'linkedin':
+                window.open('https://www.linkedin.com/in/manuel-aguirre-4116-dev/', '_blank');
+                break;
             case 'github':
                 window.open('https://github.com/manuel-aguirre-dev', '_blank');
                 break;
-                case 'instagram':
-                    window.open('https://www.instagram.com/_aguirre_manuel_/', '_blank');
-                    break;
-                    default:
-                        alert('Agrega tu enlace de red social aquí');
-                    }
-                });
-            });
-            
-            
-            // Inicializar
-            updateNavigationButtons();
-            
+            case 'instagram':
+                window.open('https://www.instagram.com/_aguirre_manuel_/', '_blank');
+                break;
+            default:
+                alert('Agrega tu enlace de red social aquí');
+        }
+    });
+});
+
+
+// Inicializar
+updateNavigationButtons();
+
 // Cerrar menú móvil al hacer clic fuera
 document.addEventListener('click', function (e) {
     const sidebar = document.getElementById('sidebar');
     const menuBtn = document.querySelector('.mobile-menu-btn');
-    
+
     if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
         closeMobileMenu();
     }
@@ -144,7 +144,7 @@ document.querySelectorAll('.card, .project-card, .skill-item').forEach(card => {
 function typeWriter(element, text, speed = 100) {
     let i = 0;
     element.innerHTML = '';
-    
+
     function type() {
         if (i < text.length) {
             element.innerHTML += text.charAt(i);
@@ -176,7 +176,7 @@ function createParticles() {
     z-index: 1;
     `;
     document.body.appendChild(particlesContainer);
-    
+
     for (let i = 0; i < 50; i++) {
         const particle = document.createElement('div');
         particle.style.cssText = `
@@ -191,7 +191,7 @@ function createParticles() {
         `;
         particlesContainer.appendChild(particle);
     }
-    
+
     // Agregar keyframes para la animación
     const style = document.createElement('style');
     style.textContent = `
@@ -201,9 +201,9 @@ function createParticles() {
         50% { transform: translateY(-20px) translateX(10px); }
         }
         `;
-        document.head.appendChild(style);
-    }
-    
+    document.head.appendChild(style);
+}
+
 // Inicializar partículas
 createParticles();
 
@@ -213,7 +213,7 @@ function smoothScroll(target, duration) {
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
     let startTime = null;
-    
+
     function animation(currentTime) {
         if (startTime === null) startTime = currentTime;
         const timeElapsed = currentTime - startTime;
@@ -221,14 +221,14 @@ function smoothScroll(target, duration) {
         window.scrollTo(0, run);
         if (timeElapsed < duration) requestAnimationFrame(animation);
     }
-    
+
     function ease(t, b, c, d) {
         t /= d / 2;
         if (t < 1) return c / 2 * t * t + b;
         t--;
         return -c / 2 * (t * (t - 2) - 1) + b;
     }
-    
+
     requestAnimationFrame(animation);
 }
 
@@ -259,7 +259,7 @@ function showPreloader() {
     z-index: 9999;
     transition: opacity 0.5s ease;
     `;
-    
+
     const spinner = document.createElement('div');
     spinner.style.cssText = `
     width: 50px;
@@ -269,7 +269,7 @@ function showPreloader() {
     border-radius: 50%;
     animation: spin 1s linear infinite;
     `;
-    
+
     const spinStyle = document.createElement('style');
     spinStyle.textContent = `
     @keyframes spin {
@@ -278,7 +278,7 @@ function showPreloader() {
         }
         `;
     document.head.appendChild(spinStyle);
-    
+
     preloader.appendChild(spinner);
     document.body.appendChild(preloader);
 
@@ -294,41 +294,41 @@ function showPreloader() {
 showPreloader();
 
 // Toggle del menú del CV
-document.querySelector(".cv-button").addEventListener("click", function(e) {
+document.querySelector(".cv-button").addEventListener("click", function (e) {
     e.stopPropagation(); // evita cerrar inmediatamente
-  document.querySelector(".cv-dropdown").classList.toggle("show");
+    document.querySelector(".cv-dropdown").classList.toggle("show");
 });
 
 // Cierra el menú si se hace clic fuera
-document.addEventListener("click", function(e) {
+document.addEventListener("click", function (e) {
     const dropdown = document.querySelector(".cv-dropdown");
     if (!dropdown.contains(e.target)) {
         dropdown.classList.remove("show");
     }
 });
 
-const audio = new Audio("./assets/sounds/fondo.mp3");
+// Ruta absoluta desde el root
+const audio = new Audio("/assets/sounds/fondo.mp3");
 const musicBtn = document.getElementById("musicToggle");
 
 audio.loop = true; // que se repita automáticamente
 
+// Primer click en cualquier lugar de la ventana
 window.addEventListener('click', () => {
     if (!musicBtn.checked) {
-        audio.play();
+        audio.play().catch(err => console.log(err));
         musicBtn.checked = true;
     }
 }, { once: true });
 
-
-// Toggle cuando se hace click
+// Toggle cuando se hace click en el botón
 musicBtn.addEventListener("change", () => {
-  if (musicBtn.checked) {
-    audio.play();
-  } else {
-    audio.pause();
-  }
+    if (musicBtn.checked) {
+        audio.play().catch(err => console.log(err));
+    } else {
+        audio.pause();
+    }
 });
-
 
 console.log('Portafolio cargado correctamente');
 console.log('Tip: Prueba usar las flechas del teclado para navegar');
