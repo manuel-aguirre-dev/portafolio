@@ -1,6 +1,6 @@
 # Manuel Aguirre - Desarrollador Fullstack
 
-¡Bienvenido a mi perfil profesional! 👋 
+¡Bienvenido a mi perfil profesional! 😎
 
 ## 📫 Contacto
 
@@ -9,4 +9,4 @@
 - **GitHub:** [github.com/manuel-aguirre-dev](https://github.com/manuel-aguirre-dev)  
 - **Ubicación:** Buenos Aires, Argentina
 
-“Aprender, crear y optimizar: mi filosofía como desarrollador.”  
+> Patria, trabajo y familia… (y que el código compile).
