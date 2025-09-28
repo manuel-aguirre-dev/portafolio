@@ -1,3 +1,9 @@
+/* 
+ * Portafolio Responsive - Styles Main File
+ * Archivo principal que importa todos los módulos CSS
+ * Actualizado con mejoras responsive completas
+ */
+
 @import url("./modules/base.css");
 @import url("./modules/layout.css");
 @import url("./modules/components.css");
@@ -7,3 +13,63 @@
 @import url("./modules/contact-form.css");
 @import url("./modules/icons.css");
 @import url("./modules/music.css");
+
+/* 
+ * Optimizaciones adicionales para performance
+ * y mejores prácticas responsive
+ */
+
+/* Performance optimizations */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU acceleration for animations */
+.sidebar,
+.mobile-menu-btn,
+.project-card,
+.skill-item,
+.social-link,
+.action-btn {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Touch improvements */
+@media (pointer: coarse) {
+    .nav-link,
+    .action-btn,
+    .social-link,
+    .nav-btn,
+    .mobile-menu-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Focus management */
+.focus-trap:focus {
+    outline: 2px solid #4ecdc4;
+    outline-offset: 2px;
+}
+
+/* Critical CSS inlined for faster loading */
+.content-section {
+    contain: layout style paint;
+}
+
+.project-grid,
+.skills-grid {
+    contain: layout;
+}
+
+/* Intersection Observer fallback */
+@supports not (IntersectionObserver) {
+    .card,
+    .project-card,
+    .skill-item {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

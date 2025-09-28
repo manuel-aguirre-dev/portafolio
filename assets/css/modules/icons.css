@@ -1,34 +1,174 @@
 .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
 
-        .social-link {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
+.social-link {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
 
-        .social-link.linkedin {
-            background: #0077b5;
-        }
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-        .social-link.github {
-            background: #333;
-        }
+.social-link.linkedin {
+    background: #0077b5;
+}
 
-        .social-link.instagram {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-        }
+.social-link.linkedin::before {
+    background: linear-gradient(45deg, #0077b5, #005885);
+}
 
-        .social-link:hover {
-            transform: translateY(-3px) scale(1.1);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
+.social-link.github {
+    background: #333;
+}
+
+.social-link.github::before {
+    background: linear-gradient(45deg, #333, #555);
+}
+
+.social-link.instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.social-link.instagram::before {
+    background: linear-gradient(45deg, #f09433, #bc1888);
+}
+
+.social-link:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.social-link:hover::before {
+    opacity: 1;
+}
+
+.social-link i {
+    position: relative;
+    z-index: 1;
+    font-size: 1.2rem;
+}
+
+/* RESPONSIVE MEDIA QUERIES */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .social-links {
+        gap: 0.8rem;
+    }
+    
+    .social-link {
+        width: 42px;
+        height: 42px;
+    }
+    
+    .social-link i {
+        font-size: 1.1rem;
+    }
+}
+
+/* Mobile Landscape */
+@media (max-width: 768px) {
+    .social-links {
+        gap: 0.8rem;
+        margin-top: 1.5rem;
+    }
+    
+    .social-link {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .social-link i {
+        font-size: 1rem;
+    }
+    
+    .social-link:hover {
+        transform: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+    .social-links {
+        gap: 0.6rem;
+        margin-top: 1rem;
+    }
+    
+    .social-link {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .social-link i {
+        font-size: 0.9rem;
+    }
+    
+    .social-link:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 320px) {
+    .social-links {
+        gap: 0.5rem;
+    }
+    
+    .social-link {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .social-link i {
+        font-size: 0.85rem;
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .social-link {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Touch Devices - Larger tap targets */
+@media (pointer: coarse) {
+    .social-link {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .social-link {
+        transition: none;
+    }
+    
+    .social-link:hover {
+        transform: none;
+    }
+}

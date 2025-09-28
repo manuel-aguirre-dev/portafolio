@@ -17,4 +17,51 @@
     flex: 1;
     padding: 2rem 3rem;
     min-height: 100vh;
+    width: calc(100% - 280px);
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 260px;
+        padding: 1.5rem 1rem;
+    }
+    
+    .main-content {
+        margin-left: 260px;
+        padding: 1.5rem 2rem;
+        width: calc(100% - 260px);
+    }
+}
+
+/* Mobile Landscape y Tablet Pequeña */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 100%;
+        max-width: 320px;
+        box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+        width: 100%;
+    }
+}
+
+/* Mobile Portrait */
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100vw;
+        padding: 1rem;
+    }
+    
+    .main-content {
+        padding: 0.5rem;
+    }
 }

@@ -12,3 +12,17 @@ body {
     display: flex;
     overflow-x: hidden;
 }
+
+/* Media Queries para Base */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 13px;
+    }
+}

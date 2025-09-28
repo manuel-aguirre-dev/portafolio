@@ -1,14 +1,402 @@
-@media (max-width: 768px) {
-    .sidebar { transform: translateX(-100%); width: 100%; }
-    .sidebar.active { transform: translateX(0); }
-    .main-content { margin-left: 0; padding: 1rem; }
+/* =================
+   MOBILE MENU BUTTON
+   ================= */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 200;
+    background: #4ecdc4;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+    transition: all 0.3s ease;
+}
 
-    .mobile-menu-btn {
-        position: fixed; top: 1rem; left: 1rem; z-index: 200;
-        background: #4ecdc4; color: white; border: none;
-        padding: 1rem; border-radius: 50%;
-        cursor: pointer; display: block;
+.mobile-menu-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.6);
+}
+
+.mobile-menu-btn:active {
+    transform: scale(0.95);
+}
+
+/* =================
+   LARGE SCREENS - DESKTOP
+   ================= */
+@media (min-width: 1400px) {
+    .main-content {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 320px;
+    }
+    
+    .sidebar {
+        width: 300px;
     }
 }
 
-.mobile-menu-btn { display: none; }
+/* =================
+   TABLET LARGE - LANDSCAPE
+   ================= */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .sidebar {
+        width: 260px;
+    }
+    
+    .main-content {
+        margin-left: 260px;
+        padding: 1.5rem 2rem;
+    }
+    
+    .project-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+/* =================
+   TABLET SMALL - MOBILE LANDSCAPE
+   ================= */
+@media (max-width: 768px) {
+    /* Mobile menu button visible */
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    /* Sidebar transforms */
+    .sidebar {
+        transform: translateX(-100%);
+        width: 100%;
+        max-width: 320px;
+        box-shadow: 5px 0 20px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(15px);
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* Main content adjustments */
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+        width: 100%;
+        padding-top: 4rem; /* Space for mobile menu button */
+    }
+    
+    /* Grid adjustments */
+    .project-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* Navigation buttons stack */
+    .navigation-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    /* Cards adjustments */
+    .card,
+    .project-card {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Disable hover effects on touch devices */
+    .card:hover,
+    .project-card:hover,
+    .skill-item:hover {
+        transform: none;
+    }
+    
+    /* Services grid for tablet */
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+/* =================
+   MOBILE PORTRAIT
+   ================= */
+@media (max-width: 480px) {
+    /* Mobile menu button smaller */
+    .mobile-menu-btn {
+        width: 45px;
+        height: 45px;
+        padding: 0.8rem;
+        top: 0.8rem;
+        left: 0.8rem;
+    }
+    
+    /* Sidebar full width */
+    .sidebar {
+        width: 100vw;
+        max-width: none;
+        padding: 1rem;
+    }
+    
+    /* Main content minimal padding */
+    .main-content {
+        padding: 0.5rem;
+        padding-top: 3.5rem;
+    }
+    
+    /* Cards minimal padding */
+    .card,
+    .project-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 12px;
+    }
+    
+    /* Project actions stack vertically */
+    .project-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .action-btn {
+        width: 100%;
+        padding: 1rem;
+        justify-content: center;
+    }
+    
+    /* Navigation buttons */
+    .nav-btn {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Skills grid 2 columns */
+    .skills-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+    }
+    
+    /* Services stack vertically */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    /* Technology tags smaller */
+    .tech-tags {
+        justify-content: center;
+        gap: 0.4rem;
+    }
+    
+    .tech-tag {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    /* Section title smaller */
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.2rem;
+        text-align: center;
+    }
+    
+    .section-title::after {
+        width: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* =================
+   EXTRA SMALL MOBILE
+   ================= */
+@media (max-width: 320px) {
+    /* Even smaller mobile menu button */
+    .mobile-menu-btn {
+        width: 40px;
+        height: 40px;
+        padding: 0.6rem;
+        top: 0.5rem;
+        left: 0.5rem;
+    }
+    
+    /* Minimal spacing */
+    .main-content {
+        padding: 0.3rem;
+        padding-top: 3rem;
+    }
+    
+    .card,
+    .project-card {
+        padding: 0.8rem;
+        margin-bottom: 0.8rem;
+        border-radius: 10px;
+    }
+    
+    /* Single column everything */
+    .skills-grid,
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+    
+    /* Smaller buttons */
+    .nav-btn,
+    .action-btn {
+        padding: 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Tiny tech tags */
+    .tech-tag {
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+    }
+    
+    /* Very small section titles */
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .section-title::after {
+        width: 40px;
+    }
+    
+    /* Profile adjustments */
+    .profile-image {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .profile-name {
+        font-size: 1rem;
+    }
+    
+    .profile-title {
+        font-size: 0.75rem;
+    }
+}
+
+/* =================
+   LANDSCAPE ORIENTATION
+   ================= */
+@media (max-height: 500px) and (orientation: landscape) {
+    .sidebar {
+        padding: 1rem;
+    }
+    
+    .profile-section {
+        margin-bottom: 1rem;
+    }
+    
+    .profile-image {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .nav-menu {
+        margin-bottom: 1rem;
+    }
+    
+    .nav-link {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .navigation-buttons {
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+}
+
+/* =================
+   HIGH DPI DISPLAYS
+   ================= */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .mobile-menu-btn {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .sidebar {
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* =================
+   DARK MODE SUPPORT
+   ================= */
+@media (prefers-color-scheme: dark) {
+    /* Ya está implementado en el diseño base, pero se puede extender */
+}
+
+/* =================
+   REDUCED MOTION
+   ================= */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .sidebar {
+        transition: none;
+    }
+    
+    .mobile-menu-btn {
+        transition: none;
+    }
+}
+
+/* =================
+   PRINT STYLES
+   ================= */
+@media print {
+    .mobile-menu-btn,
+    .navigation-buttons {
+        display: none !important;
+    }
+    
+    .sidebar {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+        padding: 1rem;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .content-section {
+        display: block !important;
+        page-break-after: always;
+    }
+    
+    .project-card,
+    .card {
+        border: 1px solid #ccc;
+        background: white;
+        color: black;
+        box-shadow: none;
+        page-break-inside: avoid;
+    }
+}
