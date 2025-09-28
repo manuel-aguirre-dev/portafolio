@@ -2,13 +2,16 @@
 const sections = ['about', 'portfolio', 'education', 'skills', 'services'];
 let currentSectionIndex = 0;
 let isMobile = window.innerWidth <= 768;
+let isNetbook = window.innerWidth <= 1366 && window.innerHeight <= 768; // Detectar netbook
 let touchStartX = 0;
 let touchEndX = 0;
 
 // Detectar cambios de tamaño de pantalla
 window.addEventListener('resize', () => {
     const wasMobile = isMobile;
+    const wasNetbook = isNetbook;
     isMobile = window.innerWidth <= 768;
+    isNetbook = window.innerWidth <= 1366 && window.innerHeight <= 768;
     
     // Si cambió de mobile a desktop o viceversa
     if (wasMobile !== isMobile) {
@@ -19,7 +22,44 @@ window.addEventListener('resize', () => {
         // Reajustar elementos si es necesario
         adjustForScreenSize();
     }
+
+    // Ajustar sidebar para netbook
+    if (wasNetbook !== isNetbook) {
+        adjustSidebarForNetbook();
+    }
 });
+
+// Función para ajustar sidebar en netbooks
+function adjustSidebarForNetbook() {
+    const sidebar = document.getElementById('sidebar');
+    if (isNetbook && sidebar) {
+        // Hacer el sidebar scrolleable en netbooks
+        sidebar.style.overflowY = 'auto';
+        sidebar.style.paddingTop = '1rem';
+        sidebar.style.paddingBottom = '1rem';
+        
+        // Reducir espaciados en netbook
+        const profileSection = sidebar.querySelector('.profile-section');
+        if (profileSection) {
+            profileSection.style.marginBottom = '1.5rem';
+        }
+
+        const navMenu = sidebar.querySelector('.nav-menu');
+        if (navMenu) {
+            navMenu.style.marginBottom = '1rem';
+        }
+
+        const socialLinks = sidebar.querySelector('.social-links');
+        if (socialLinks) {
+            socialLinks.style.marginTop = '1rem';
+        }
+
+        const musicContainer = sidebar.querySelector('.music-container');
+        if (musicContainer) {
+            musicContainer.style.marginTop = '1rem';
+        }
+    }
+}
 
 // Función para ajustar elementos según el tamaño de pantalla
 function adjustForScreenSize() {
@@ -34,6 +74,56 @@ function adjustForScreenSize() {
         // Rehabilitar animaciones en desktop
         cards.forEach(card => {
             card.style.transition = '';
+        });
+    }
+}
+
+// Efecto fade en la profile-image (luna) con scroll
+function initProfileImageFadeEffect() {
+    const profileImage = document.querySelector('.profile-image');
+    const sidebar = document.querySelector('.sidebar');
+    
+    if (!profileImage || isMobile) return; // No aplicar en móvil
+
+    function updateProfileImageFade() {
+        // Obtener la posición del scroll del contenido principal
+        const mainContent = document.querySelector('.main-content');
+        if (!mainContent) return;
+
+        const scrollTop = mainContent.scrollTop;
+        const maxScroll = 200; // Distancia máxima para el efecto fade
+
+        // Calcular la opacidad basada en el scroll (de 1 a 0.1)
+        const opacity = Math.max(0.1, 1 - (scrollTop / maxScroll));
+        
+        // Calcular el transform basado en el scroll
+        const translateY = (scrollTop / maxScroll) * 20; // Máximo 20px hacia abajo
+        const scale = Math.max(0.8, 1 - (scrollTop / maxScroll) * 0.2); // Mínimo 0.8
+
+        // Aplicar los efectos
+        profileImage.style.opacity = opacity;
+        profileImage.style.transform = `translateY(${translateY}px) scale(${scale})`;
+        
+        // Agregar/quitar clase para transiciones suaves
+        if (scrollTop > 50) {
+            profileImage.classList.add('fade-out');
+        } else {
+            profileImage.classList.remove('fade-out');
+        }
+    }
+
+    // Escuchar el scroll del contenido principal
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+        let ticking = false;
+        mainContent.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateProfileImageFade();
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
     }
 }
@@ -157,6 +247,8 @@ document.querySelectorAll('.social-link').forEach(link => {
 // Inicializar
 updateNavigationButtons();
 adjustForScreenSize();
+adjustSidebarForNetbook();
+initProfileImageFadeEffect(); // Inicializar el efecto fade
 
 // Cerrar menú móvil al hacer clic fuera
 document.addEventListener('click', function (e) {
@@ -292,9 +384,9 @@ setTimeout(() => {
     }
 }, 500);
 
-// Partículas de fondo animadas (solo en desktop)
+// Partículas de fondo animadas (solo en desktop, no en netbook por performance)
 function createParticles() {
-    if (isMobile) return; // Evitar en móvil para mejor performance
+    if (isMobile || isNetbook) return; // Evitar en móvil y netbook para mejor performance
     
     const particlesContainer = document.createElement('div');
     particlesContainer.style.cssText = `
@@ -308,15 +400,15 @@ function createParticles() {
     `;
     document.body.appendChild(particlesContainer);
 
-    for (let i = 0; i < 30; i++) { // Reducido para mejor performance
+    for (let i = 0; i < 20; i++) { // Reducido aún más para mejor performance
         const particle = document.createElement('div');
         particle.style.cssText = `
             position: absolute;
             width: 2px;
             height: 2px;
-            background: rgba(78, 205, 196, 0.3);
+            background: rgba(78, 205, 196, 0.2);
             border-radius: 50%;
-            animation: float ${5 + Math.random() * 10}s linear infinite;
+            animation: float ${8 + Math.random() * 12}s linear infinite;
             left: ${Math.random() * 100}%;
             top: ${Math.random() * 100}%;
         `;
@@ -328,8 +420,8 @@ function createParticles() {
     style.textContent = `
         @keyframes float {
             0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0; }
-            10%, 90% { opacity: 1; }
-            50% { transform: translateY(-20px) translateX(10px); }
+            10%, 90% { opacity: 0.8; }
+            50% { transform: translateY(-15px) translateX(8px); }
         }
     `;
     document.head.appendChild(style);
@@ -338,9 +430,9 @@ function createParticles() {
 // Inicializar partículas
 createParticles();
 
-// Smooth scroll personalizado (mejorado para móvil)
+// Smooth scroll personalizado (mejorado para móvil y netbook)
 function smoothScroll(target, duration = 500) {
-    if (isMobile) {
+    if (isMobile || isNetbook) {
         target.scrollIntoView({ behavior: 'smooth' });
         return;
     }
@@ -368,27 +460,6 @@ function smoothScroll(target, duration = 500) {
     requestAnimationFrame(animation);
 }
 
-// Efecto de paralaje sutil (deshabilitado en móvil)
-let ticking = false;
-function updateParallax() {
-    if (isMobile) return;
-    
-    const scrolled = window.pageYOffset;
-    const parallax = document.querySelector('.profile-image');
-    if (parallax) {
-        const speed = scrolled * 0.3; // Reducido para mejor performance
-        parallax.style.transform = `translateY(${speed}px)`;
-    }
-    ticking = false;
-}
-
-window.addEventListener('scroll', () => {
-    if (!ticking && !isMobile) {
-        requestAnimationFrame(updateParallax);
-        ticking = true;
-    }
-});
-
 // Preloader optimizado
 function showPreloader() {
     const preloader = document.createElement('div');
@@ -408,9 +479,10 @@ function showPreloader() {
     `;
 
     const spinner = document.createElement('div');
+    const spinnerSize = isMobile ? '40px' : isNetbook ? '45px' : '50px';
     spinner.style.cssText = `
-        width: ${isMobile ? '40px' : '50px'};
-        height: ${isMobile ? '40px' : '50px'};
+        width: ${spinnerSize};
+        height: ${spinnerSize};
         border: 3px solid rgba(78, 205, 196, 0.3);
         border-top: 3px solid #4ecdc4;
         border-radius: 50%;
@@ -429,7 +501,7 @@ function showPreloader() {
     preloader.appendChild(spinner);
     document.body.appendChild(preloader);
 
-    const hideDelay = isMobile ? 1000 : 1500; // Más rápido en móvil
+    const hideDelay = isMobile ? 1000 : isNetbook ? 1200 : 1500;
     setTimeout(() => {
         preloader.style.opacity = '0';
         setTimeout(() => {
@@ -466,17 +538,17 @@ if (cvButton && cvDropdown) {
     });
 }
 
-// Audio con mejor manejo para móvil
+// Audio con mejor manejo para móvil y netbook
 const audio = new Audio("/assets/sounds/fondo.mp3");
 const musicBtn = document.getElementById("musicToggle");
 
 if (audio && musicBtn) {
     audio.loop = true;
-    audio.volume = isMobile ? 0.3 : 0.5; // Volumen más bajo en móvil
+    audio.volume = isMobile ? 0.2 : isNetbook ? 0.4 : 0.5;
 
-    // Configuración para móvil
-    if (isMobile) {
-        audio.preload = "none"; // No precargar en móvil para ahorrar datos
+    // Configuración para móvil y netbook
+    if (isMobile || isNetbook) {
+        audio.preload = "none"; // No precargar para ahorrar recursos
     }
 
     // Primer click en cualquier lugar de la ventana
@@ -515,12 +587,13 @@ if (audio && musicBtn) {
 
 // Performance monitoring (solo en desarrollo)
 if (window.location.hostname === 'localhost') {
-    console.log('Portafolio cargado correctamente');
-    console.log('Dispositivo:', isMobile ? 'Móvil' : 'Desktop');
-    console.log('Viewport:', window.innerWidth + 'x' + window.innerHeight);
-    console.log('Tip: Prueba usar las flechas del teclado para navegar (desktop)');
-    console.log('Tip: Usa swipe para navegar (móvil)');
-    console.log('Easter egg: El form no funciona jeje');
+    console.log('🚀 Portafolio cargado correctamente');
+    console.log('📱 Dispositivo:', isMobile ? 'Móvil' : isNetbook ? 'Netbook' : 'Desktop');
+    console.log('📐 Viewport:', window.innerWidth + 'x' + window.innerHeight);
+    console.log('💡 Tip: Prueba usar las flechas del teclado para navegar (desktop)');
+    console.log('👆 Tip: Usa swipe para navegar (móvil)');
+    console.log('🌙 Tip: Haz scroll para ver el efecto fade en la luna (desktop)');
+    console.log('😅 Easter egg: El form no funciona jeje');
 }
 
 // Service Worker para PWA (opcional)
