@@ -539,7 +539,7 @@ if (cvButton && cvDropdown) {
 }
 
 // Audio con mejor manejo para móvil y netbook
-const audio = new Audio("/assets/sounds/fondo.mp3");
+const audio = new Audio("./assets/sounds/fondo.mp3");
 const musicBtn = document.getElementById("musicToggle");
 
 if (audio && musicBtn) {
