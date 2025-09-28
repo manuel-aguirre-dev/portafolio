@@ -78,6 +78,57 @@ function adjustForScreenSize() {
     }
 }
 
+// "Efecto fade en la profile-image (luna) con scroll (todo h)"
+// REALMENTE NO ANDA NADA PERO DEPENDE LA WEB DE LA FUNCION initProfile D:
+function initProfileImageFadeEffect() {
+    const profileImage = document.querySelector('.profile-image');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (!profileImage || isMobile) return; // No aplicar en móvil
+
+    function updateProfileImageFade() {
+        // Obtener la posición del scroll del contenido principal
+        const mainContent = document.querySelector('.main-content');
+        if (!mainContent) return;
+
+        const scrollTop = mainContent.scrollTop;
+        const maxScroll = 200; // Distancia máxima para el efecto fade
+
+        // Calcular la opacidad basada en el scroll (de 1 a 0.1)
+        const opacity = Math.max(0.1, 1 - (scrollTop / maxScroll));
+
+        // Calcular el transform basado en el scroll
+        const translateY = (scrollTop / maxScroll) * 20; // Máximo 20px hacia abajo
+        const scale = Math.max(0.8, 1 - (scrollTop / maxScroll) * 0.2); // Mínimo 0.8
+
+        // Aplicar los efectos
+        profileImage.style.opacity = opacity;
+        profileImage.style.transform = `translateY(${translateY}px) scale(${scale})`;
+
+        // Agregar/quitar clase para transiciones suaves
+        if (scrollTop > 50) {
+            profileImage.classList.add('fade-out');
+        } else {
+            profileImage.classList.remove('fade-out');
+        }
+    }
+
+    // Escuchar el scroll del contenido principal
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+        let ticking = false;
+        mainContent.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateProfileImageFade();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+    }
+}
+
 // Navegación del menú
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function (e) {

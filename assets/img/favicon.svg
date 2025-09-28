@@ -1,0 +1,38 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente de fondo mejorado -->
+    <radialGradient id="bgGradientProfile" cx="30%" cy="30%" r="80%">
+      <stop offset="0%" style="stop-color:#ff8fb3;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ff6b9d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4ecdc4;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Gradiente para el texto -->
+    <linearGradient id="textGradientProfile" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:0.9" />
+    </linearGradient>
+    
+    <!-- Sombra para el texto -->
+    <filter id="textShadow">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Fondo circular con gradiente mejorado -->
+  <circle cx="60" cy="60" r="60" fill="url(#bgGradientProfile)"/>
+  
+  <!-- Brillo sutil en la parte superior -->
+  <circle cx="60" cy="60" r="58" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <ellipse cx="50" cy="45" rx="25" ry="15" fill="rgba(255,255,255,0.1)"/>
+  
+  <!-- Iniciales "M. A." más grandes y legibles -->
+  <text x="60" y="45" text-anchor="middle" fill="url(#textGradientProfile)" 
+        font-family="'Courier New', monospace" font-size="24" font-weight="bold"
+        filter="url(#textShadow)">M. A.</text>
+  
+  <!-- Símbolo "</>" más grande y visible -->
+  <text x="60" y="85" text-anchor="middle" fill="url(#textGradientProfile)" 
+        font-family="'Courier New', monospace" font-size="18" font-weight="normal"
+        filter="url(#textShadow)">&lt;/&gt;</text>
+</svg>
