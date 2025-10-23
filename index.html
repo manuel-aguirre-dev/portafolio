@@ -113,11 +113,11 @@
             </button>
             <div class="cv-dropdown-content" role="menu">
                 <a href="./assets/pdf/CV_VIRTUAL.pdf" target="_blank""
-                    target="_blank" rel="noopener noreferrer" role="menuitem">
+                    target=" _blank" rel="noopener noreferrer" role="menuitem">
                     <i class="fas fa-eye" aria-hidden="true"></i> Ver Online
                 </a>
-                <a href="./assets/pdf/CV_VIRTUAL.pdf" download="Manuel_Aguirre_CV.pdf"
-                    target="_blank" rel="noopener noreferrer" role="menuitem">
+                <a href="./assets/pdf/CV_VIRTUAL.pdf" download="Manuel_Aguirre_CV.pdf" target="_blank"
+                    rel="noopener noreferrer" role="menuitem">
                     <i class="fas fa-file-pdf" aria-hidden="true"></i> Descargar PDF
                 </a>
             </div>
@@ -282,7 +282,8 @@
                                 class="highlight-green">aplicación
                                 web</span> que transformó la compra en kioskos escolares, eliminando filas y agilizando
                             pedidos. Incluye pagos integrados wallet, notificaciones en tiempo real y una
-                            plataforma modular que permite escalabilidad y una experiencia de usuario fluida y satisfactoria.
+                            plataforma modular que permite escalabilidad y una experiencia de usuario fluida y
+                            satisfactoria.
                         </p>
                         <div class="technologies-section">
                             <h4><i class="fas fa-wrench" aria-hidden="true"></i> Tecnologías:</h4>
@@ -337,10 +338,12 @@
                             </div>
                         </div>
                         <div class="project-actions">
-                            <a href="#" class="action-btn primary" aria-label="Ver código fuente en GitHub">
+                            <a href="https://github.com/manuel-aguirre-developer/portafolio" class="action-btn primary"
+                                aria-label="Ver código fuente en GitHub">
                                 <i class="fab fa-github" aria-hidden="true"></i> Ver en GitHub
                             </a>
-                            <a href="#" class="action-btn secondary" aria-label="Ver demostración en vivo">
+                            <a href="https://manuel-aguirre-developer.github.io/portafolio/"
+                                class="action-btn secondary" aria-label="Ver demostración en vivo">
                                 <i class="fas fa-external-link-alt" aria-hidden="true"></i> Demo Live
                             </a>
                         </div>
@@ -375,13 +378,28 @@
                             </div>
                         </div>
                         <div class="project-actions">
-                            <a href="#" class="action-btn primary" aria-label="Ver código fuente en GitHub">
+                            <a href="#" class="action-btn primary" aria-label="Ver código fuente en GitHub"
+                                id="btn-github-gestorDeViajes">
                                 <i class="fab fa-github" aria-hidden="true"></i> Ver en GitHub
                             </a>
-                            <a href="#" class="action-btn secondary" aria-label="Ver vista previa">
+                            <a href="#" class="action-btn secondary" aria-label="Ver vista previa" id="btn-preview-gestorDeViajes">
                                 <i class="fas fa-eye" aria-hidden="true"></i> Preview
                             </a>
                         </div>
+
+                        <script>
+                            // Mensaje en consola
+                            document.getElementById("btn-github-gestorDeViajes").addEventListener("click", (e) => {
+                                e.preventDefault();
+                                console.log("Aun no esta disponible el código fuente en GitHub.");
+                            });
+
+                            document.getElementById("btn-preview-gestorDeViajes").addEventListener("click", (e) => {
+                                e.preventDefault();
+                                console.log("Aun no está disponible la vista previa del proyecto.");
+                            });
+                        </script>
+
                     </article>
                 </div>
             </section>
