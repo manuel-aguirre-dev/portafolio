@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Partículas de fondo animadas
 function createParticles() {
-    if (isMobile || isNetbook) return;
+    // if (isMobile || isNetbook) return;
 
     const particlesContainer = document.createElement('div');
     particlesContainer.style.cssText = `

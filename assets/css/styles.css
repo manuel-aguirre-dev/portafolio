@@ -1,5 +1,4 @@
 /* 
- * Portafolio Responsive - Styles Main File
  * Archivo principal que importa todos los módulos CSS
  */
 
@@ -13,10 +12,6 @@
 @import url("./modules/icons.css");
 @import url("./modules/music.css");
 @import url("./modules/profile-img.css");
-
-/* 
- * Mejoras visuales básicas
- */
 
 /* Font smoothing para mejor legibilidad */
 * {
