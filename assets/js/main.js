@@ -625,11 +625,6 @@ if (audio && musicBtn && musicContainer) {
             toggleAudio();
         }
     };
-
-    // Solo desktop: autoplay suave
-    if (!isMobile) {
-        window.addEventListener('click', enableAudioOnFirstInteraction, { once: true });
-    }
 }
 
 // Performance monitoring
