@@ -4,6 +4,10 @@
   position: relative;
   border-radius: 50%;
   margin: 0.5rem auto;
+  /* Mejorar área táctil en móvil */
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .play-btn {
@@ -17,6 +21,8 @@
   outline: none;
   box-shadow: 0 0 6px rgba(155, 89, 182, 0.6);
   transition: all 0.3s ease;
+  /* Asegurar que sea clickeable */
+  z-index: 1;
 }
 
 .play-btn::before {
@@ -61,6 +67,9 @@
   clip-path: polygon(50% 15%, 0% 100%, 100% 100%);
   transition: all 400ms ease-in-out;
   cursor: pointer;
+  /* No debe interceptar clicks */
+  pointer-events: none;
+  z-index: 2;
 }
 
 .play-btn:checked + .play-icon {
@@ -75,6 +84,9 @@
   top: 50%;
   transform: translate(-50%, -50%);
   cursor: pointer;
+  /* No debe interceptar clicks */
+  pointer-events: none;
+  z-index: 2;
 }
 
 .pause-icon::before,
@@ -127,9 +139,20 @@
 /* Mobile Landscape */
 @media (max-width: 768px) {
   .music-container {
-    width: 40px;
-    height: 40px;
+    /* Hacer el área táctil más grande */
+    width: 50px;
+    height: 50px;
     margin: 1rem auto;
+    /* Agregar padding invisible para área táctil */
+    padding: 5px;
+  }
+  
+  .play-btn {
+    /* Ajustar tamaño para compensar el padding */
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    left: 5px;
+    top: 5px;
   }
   
   .play-icon {
@@ -145,24 +168,40 @@
   .play-btn {
     box-shadow: 0 0 4px rgba(155, 89, 182, 0.6);
   }
+  
+  /* Estado activo/presionado en móvil */
+  .music-container:active {
+    transform: scale(0.95);
+  }
 }
 
 /* Mobile Portrait */
 @media (max-width: 480px) {
   .music-container {
-    width: 35px;
-    height: 35px;
+    /* Aún más grande para móviles pequeños */
+    width: 55px;
+    height: 55px;
     margin: 0.8rem auto;
+    padding: 8px;
+    /* Feedback visual al tocar */
+    transition: transform 0.1s ease;
+  }
+  
+  .play-btn {
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+    left: 8px;
+    top: 8px;
   }
   
   .play-icon {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
   }
   
   .pause-icon {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
   }
   
   .play-btn {
@@ -173,19 +212,27 @@
 /* Extra Small Mobile */
 @media (max-width: 320px) {
   .music-container {
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     margin: 0.5rem auto;
+    padding: 8px;
+  }
+  
+  .play-btn {
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+    left: 8px;
+    top: 8px;
   }
   
   .play-icon {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
   }
   
   .pause-icon {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
   }
   
   .play-btn {
@@ -193,21 +240,29 @@
   }
 }
 
-/* Touch Devices - Larger tap targets */
+/* Touch Devices - Área táctil mínima de 44x44px */
 @media (pointer: coarse) and (min-width: 481px) {
   .music-container {
-    width: 55px;
-    height: 55px;
+    width: 60px;
+    height: 60px;
+    padding: 7px;
+  }
+  
+  .play-btn {
+    width: calc(100% - 14px);
+    height: calc(100% - 14px);
+    left: 7px;
+    top: 7px;
   }
   
   .play-icon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
   
   .pause-icon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -218,6 +273,10 @@
   }
   
   .play-icon {
+    transition: none;
+  }
+  
+  .music-container {
     transition: none;
   }
   
@@ -243,18 +302,26 @@
 /* Landscape Orientation */
 @media (max-height: 500px) and (orientation: landscape) {
   .music-container {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin: 0.3rem auto;
+    padding: 5px;
+  }
+  
+  .play-btn {
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    left: 5px;
+    top: 5px;
   }
   
   .play-icon {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
   }
   
   .pause-icon {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
   }
 }

@@ -542,11 +542,12 @@ if (cvButton && cvDropdown) {
     });
 }
 
-// Audio
+// ===== AUDIO MEJORADO PARA MÓVIL =====
 const audio = new Audio("./assets/sounds/fondo.mp3");
 const musicBtn = document.getElementById("musicToggle");
+const musicContainer = document.querySelector('.music-container');
 
-if (audio && musicBtn) {
+if (audio && musicBtn && musicContainer) {
     audio.loop = true;
     audio.volume = isMobile ? 0.2 : isNetbook ? 0.4 : 0.5;
 
@@ -554,33 +555,81 @@ if (audio && musicBtn) {
         audio.preload = "none";
     }
 
-    const enableAudio = () => {
-        if (!musicBtn.checked) {
-            audio.play().catch(err => {
-                console.log('Error playing audio:', err);
-                const musicContainer = document.querySelector('.music-container');
-                if (musicContainer) {
-                    musicContainer.style.display = 'none';
-                }
-            });
-            musicBtn.checked = true;
+    let isPlaying = false;
+    let audioEnabled = false;
+
+    // Función para toggle del audio
+    const toggleAudio = (e) => {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
         }
-    };
 
-    window.addEventListener('click', enableAudio, { once: true });
-    window.addEventListener('touchend', enableAudio, { once: true });
+        if (!audioEnabled) {
+            // Primera vez: habilitar audio
+            audioEnabled = true;
+        }
 
-    musicBtn.addEventListener("change", () => {
-        if (musicBtn.checked) {
-            audio.play().catch(err => console.log('Error playing audio:', err));
-        } else {
+        if (isPlaying) {
+            // Pausar
             audio.pause();
+            musicBtn.checked = false;
+            isPlaying = false;
+        } else {
+            // Reproducir
+            audio.play()
+                .then(() => {
+                    musicBtn.checked = true;
+                    isPlaying = true;
+                })
+                .catch(err => {
+                    console.log('Error playing audio:', err);
+                    musicBtn.checked = false;
+                    isPlaying = false;
+                });
         }
 
+        // Haptic feedback
         if (navigator.vibrate) {
             navigator.vibrate(20);
         }
-    });
+    };
+
+    // En móvil, hacer todo el contenedor clickeable
+    if (isMobile) {
+        // Hacer el contenedor más grande táctilmente
+        musicContainer.style.padding = '10px';
+        musicContainer.style.margin = '0.8rem auto';
+        musicContainer.style.cursor = 'pointer';
+        
+        // Eventos táctiles en el contenedor completo
+        musicContainer.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+
+        musicContainer.addEventListener('touchend', toggleAudio, { passive: false });
+        
+        // También en click por si acaso
+        musicContainer.addEventListener('click', toggleAudio);
+        
+        // Deshabilitar el evento change del checkbox en móvil
+        musicBtn.style.pointerEvents = 'none';
+    } else {
+        // En desktop, usar el evento change normal
+        musicBtn.addEventListener("change", toggleAudio);
+    }
+
+    // Auto-play al primer click/touch en la página
+    const enableAudioOnFirstInteraction = () => {
+        if (!audioEnabled) {
+            toggleAudio();
+        }
+    };
+
+    // Solo desktop: autoplay suave
+    if (!isMobile) {
+        window.addEventListener('click', enableAudioOnFirstInteraction, { once: true });
+    }
 }
 
 // Performance monitoring
