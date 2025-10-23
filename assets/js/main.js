@@ -2,9 +2,12 @@
 const sections = ['about', 'portfolio', 'education', 'skills', 'services'];
 let currentSectionIndex = 0;
 let isMobile = window.innerWidth <= 768;
-let isNetbook = window.innerWidth <= 1366 && window.innerHeight <= 768; // Detectar netbook
+let isNetbook = window.innerWidth <= 1366 && window.innerHeight <= 768;
 let touchStartX = 0;
+let touchStartY = 0;
 let touchEndX = 0;
+let touchEndY = 0;
+let isHorizontalSwipe = false;
 
 // Detectar cambios de tamaño de pantalla
 window.addEventListener('resize', () => {
@@ -13,17 +16,13 @@ window.addEventListener('resize', () => {
     isMobile = window.innerWidth <= 768;
     isNetbook = window.innerWidth <= 1366 && window.innerHeight <= 768;
 
-    // Si cambió de mobile a desktop o viceversa
     if (wasMobile !== isMobile) {
-        // Cerrar el menú móvil si se cambió a desktop
         if (!isMobile) {
             closeMobileMenu();
         }
-        // Reajustar elementos si es necesario
         adjustForScreenSize();
     }
 
-    // Ajustar sidebar para netbook
     if (wasNetbook !== isNetbook) {
         adjustSidebarForNetbook();
     }
@@ -33,12 +32,10 @@ window.addEventListener('resize', () => {
 function adjustSidebarForNetbook() {
     const sidebar = document.getElementById('sidebar');
     if (isNetbook && sidebar) {
-        // Hacer el sidebar scrolleable en netbooks
         sidebar.style.overflowY = 'auto';
         sidebar.style.paddingTop = '1rem';
         sidebar.style.paddingBottom = '1rem';
 
-        // Reducir espaciados en netbook
         const profileSection = sidebar.querySelector('.profile-section');
         if (profileSection) {
             profileSection.style.marginBottom = '1.5rem';
@@ -66,46 +63,37 @@ function adjustForScreenSize() {
     const cards = document.querySelectorAll('.card, .project-card, .skill-item');
 
     if (isMobile) {
-        // Deshabilitar animaciones hover en móvil
         cards.forEach(card => {
             card.style.transition = 'none';
         });
     } else {
-        // Rehabilitar animaciones en desktop
         cards.forEach(card => {
             card.style.transition = '';
         });
     }
 }
 
-// "Efecto fade en la profile-image (luna) con scroll (todo h)"
-// REALMENTE NO ANDA NADA PERO DEPENDE LA WEB DE LA FUNCION initProfile D:
+// Efecto fade en la profile-image con scroll
 function initProfileImageFadeEffect() {
     const profileImage = document.querySelector('.profile-image');
     const sidebar = document.querySelector('.sidebar');
 
-    if (!profileImage || isMobile) return; // No aplicar en móvil
+    if (!profileImage || isMobile) return;
 
     function updateProfileImageFade() {
-        // Obtener la posición del scroll del contenido principal
         const mainContent = document.querySelector('.main-content');
         if (!mainContent) return;
 
         const scrollTop = mainContent.scrollTop;
-        const maxScroll = 200; // Distancia máxima para el efecto fade
+        const maxScroll = 200;
 
-        // Calcular la opacidad basada en el scroll (de 1 a 0.1)
         const opacity = Math.max(0.1, 1 - (scrollTop / maxScroll));
+        const translateY = (scrollTop / maxScroll) * 20;
+        const scale = Math.max(0.8, 1 - (scrollTop / maxScroll) * 0.2);
 
-        // Calcular el transform basado en el scroll
-        const translateY = (scrollTop / maxScroll) * 20; // Máximo 20px hacia abajo
-        const scale = Math.max(0.8, 1 - (scrollTop / maxScroll) * 0.2); // Mínimo 0.8
-
-        // Aplicar los efectos
         profileImage.style.opacity = opacity;
         profileImage.style.transform = `translateY(${translateY}px) scale(${scale})`;
 
-        // Agregar/quitar clase para transiciones suaves
         if (scrollTop > 50) {
             profileImage.classList.add('fade-out');
         } else {
@@ -113,7 +101,6 @@ function initProfileImageFadeEffect() {
         }
     }
 
-    // Escuchar el scroll del contenido principal
     const mainContent = document.querySelector('.main-content');
     if (mainContent) {
         let ticking = false;
@@ -144,21 +131,17 @@ document.querySelectorAll('.nav-link').forEach(link => {
 
 // Mostrar sección
 function showSection(sectionId) {
-    // Ocultar todas las secciones
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
     });
 
-    // Mostrar la sección seleccionada
     document.getElementById(sectionId).classList.add('active');
 
-    // Scroll suave al inicio del contenido
     const mainContent = document.querySelector('.main-content');
     if (mainContent) {
         mainContent.scrollTop = 0;
     }
 
-    // En móvil, scroll al top de la página
     if (isMobile) {
         window.scrollTo(0, 0);
     }
@@ -181,7 +164,6 @@ function navigateSection(direction) {
         const sectionId = sections[currentSectionIndex];
         showSection(sectionId);
 
-        // Actualizar nav activo
         const navLink = document.querySelector(`[data-section="${sectionId}"]`);
         setActiveNav(navLink);
 
@@ -205,7 +187,6 @@ function toggleMobileMenu() {
     const sidebar = document.getElementById('sidebar');
     sidebar.classList.toggle('active');
 
-    // Prevenir scroll del body cuando el menú está abierto
     if (sidebar.classList.contains('active')) {
         document.body.style.overflow = 'hidden';
     } else {
@@ -224,7 +205,6 @@ document.querySelectorAll('.social-link').forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();
 
-        // Haptic feedback en dispositivos compatibles
         if (navigator.vibrate) {
             navigator.vibrate(50);
         }
@@ -249,7 +229,7 @@ document.querySelectorAll('.social-link').forEach(link => {
 updateNavigationButtons();
 adjustForScreenSize();
 adjustSidebarForNetbook();
-initProfileImageFadeEffect(); // Inicializar el efecto fade
+initProfileImageFadeEffect();
 
 // Cerrar menú móvil al hacer clic fuera
 document.addEventListener('click', function (e) {
@@ -269,46 +249,78 @@ document.addEventListener('keydown', function (e) {
         } else if (e.key === 'ArrowRight') {
             navigateSection(1);
         }
-        // Cerrar menú con Escape
         if (e.key === 'Escape') {
             closeMobileMenu();
         }
     }
 });
 
-// Navegación táctil con swipe
+// ===== NAVEGACIÓN TÁCTIL CON SWIPE MEJORADA =====
 function handleTouchStart(evt) {
+    // No hacer nada si el touch es en el sidebar
+    if (evt.target.closest('.sidebar')) {
+        return;
+    }
+
     const firstTouch = evt.touches[0];
     touchStartX = firstTouch.clientX;
+    touchStartY = firstTouch.clientY;
+    isHorizontalSwipe = false;
 }
 
 function handleTouchMove(evt) {
-    if (!touchStartX) return;
+    if (!touchStartX || !touchStartY) return;
 
-    touchEndX = evt.touches[0].clientX;
+    // No hacer nada si el touch es en el sidebar
+    if (evt.target.closest('.sidebar')) {
+        return;
+    }
 
-    // Prevenir scroll horizontal accidental
-    const diffX = Math.abs(touchStartX - touchEndX);
-    const diffY = Math.abs(evt.touches[0].clientY - (evt.touches[0].clientY || 0));
+    const currentX = evt.touches[0].clientX;
+    const currentY = evt.touches[0].clientY;
 
-    if (diffX > diffY && diffX > 50) {
+    const diffX = Math.abs(currentX - touchStartX);
+    const diffY = Math.abs(currentY - touchStartY);
+
+    // Determinar la dirección del swipe solo en el primer movimiento
+    if (!isHorizontalSwipe && (diffX > 10 || diffY > 10)) {
+        // Si el movimiento horizontal es significativamente mayor que el vertical
+        isHorizontalSwipe = diffX > diffY * 1.5; // 1.5 es el ratio para ser más estricto
+    }
+
+    // Si es swipe horizontal, prevenir el scroll vertical
+    if (isHorizontalSwipe && diffX > 30) {
         evt.preventDefault();
     }
+
+    touchEndX = currentX;
+    touchEndY = currentY;
 }
 
 function handleTouchEnd(evt) {
-    if (!touchStartX || !touchEndX) return;
+    if (!touchStartX || !touchStartY) return;
 
-    const diff = touchStartX - touchEndX;
+    // No hacer nada si el touch es en el sidebar
+    if (evt.target.closest('.sidebar')) {
+        touchStartX = 0;
+        touchStartY = 0;
+        touchEndX = 0;
+        touchEndY = 0;
+        isHorizontalSwipe = false;
+        return;
+    }
+
+    const diffX = touchStartX - touchEndX;
+    const diffY = Math.abs(touchStartY - touchEndY);
     const minSwipeDistance = 50;
 
-    // Solo en el contenido principal, no en el sidebar
-    if (!evt.target.closest('.sidebar') && Math.abs(diff) > minSwipeDistance) {
-        if (diff > 0) {
+    // Solo navegar si fue un swipe horizontal confirmado
+    if (isHorizontalSwipe && Math.abs(diffX) > minSwipeDistance) {
+        if (diffX > 0) {
             // Swipe izquierda - siguiente sección
             navigateSection(1);
         } else {
-            // Swipe derecha - sección anterior  
+            // Swipe derecha - sección anterior
             navigateSection(-1);
         }
 
@@ -318,18 +330,25 @@ function handleTouchEnd(evt) {
         }
     }
 
+    // Reset de variables
     touchStartX = 0;
+    touchStartY = 0;
     touchEndX = 0;
+    touchEndY = 0;
+    isHorizontalSwipe = false;
 }
 
 // Agregar eventos táctiles solo en móvil
 if (isMobile) {
-    document.addEventListener('touchstart', handleTouchStart, { passive: false });
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd);
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+        mainContent.addEventListener('touchstart', handleTouchStart, { passive: true });
+        mainContent.addEventListener('touchmove', handleTouchMove, { passive: false });
+        mainContent.addEventListener('touchend', handleTouchEnd, { passive: true });
+    }
 }
 
-// Animaciones al hacer scroll (optimizado para móvil)
+// Animaciones al hacer scroll
 const observerOptions = {
     threshold: isMobile ? 0.05 : 0.1,
     rootMargin: isMobile ? '0px 0px -30px 0px' : '0px 0px -50px 0px'
@@ -344,8 +363,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-
-// Efectos de tipeo para el título solo en desktop
+// Efectos de tipeo para el título
 function typeWriter(element, text, speed = 100) {
     if (isMobile) {
         element.innerHTML = text;
@@ -367,18 +385,17 @@ function typeWriter(element, text, speed = 100) {
 
 // Aplicar efecto de tipeo
 document.addEventListener("DOMContentLoaded", () => {
-    const titles = document.querySelectorAll("h1"); // selecciona todos los h1
+    const titles = document.querySelectorAll("h1");
     titles.forEach((title) => {
-        const text = title.textContent; // guarda el texto original
-        title.textContent = ""; // lo vacía para aplicar el efecto
-        typeWriter(title, text, 250); // aplica efecto de tipeo
+        const text = title.textContent;
+        title.textContent = "";
+        typeWriter(title, text, 250);
     });
 });
 
-
-// Partículas de fondo animadas (solo en desktop, no en netbook por performance)
+// Partículas de fondo animadas
 function createParticles() {
-    if (isMobile || isNetbook) return; // Evitar en móvil y netbook para mejor performance
+    if (isMobile || isNetbook) return;
 
     const particlesContainer = document.createElement('div');
     particlesContainer.style.cssText = `
@@ -392,7 +409,7 @@ function createParticles() {
     `;
     document.body.appendChild(particlesContainer);
 
-    for (let i = 0; i < 20; i++) { // Reducido para mejor performance
+    for (let i = 0; i < 20; i++) {
         const particle = document.createElement('div');
         particle.style.cssText = `
             position: absolute;
@@ -407,7 +424,6 @@ function createParticles() {
         particlesContainer.appendChild(particle);
     }
 
-    // Agregar keyframes para la animación
     const style = document.createElement('style');
     style.textContent = `
         @keyframes float {
@@ -419,10 +435,9 @@ function createParticles() {
     document.head.appendChild(style);
 }
 
-// Inicializar partículas
 createParticles();
 
-// Smooth scroll(mejorado)
+// Smooth scroll mejorado
 function smoothScroll(target, duration = 500) {
     if (isMobile || isNetbook) {
         target.scrollIntoView({ behavior: 'smooth' });
@@ -504,7 +519,6 @@ function showPreloader() {
     }, hideDelay);
 }
 
-// Mostrar preloader al cargar
 showPreloader();
 
 // Toggle del menú del CV
@@ -516,13 +530,11 @@ if (cvButton && cvDropdown) {
         e.stopPropagation();
         cvDropdown.classList.toggle("show");
 
-        //feedback
         if (navigator.vibrate) {
             navigator.vibrate(30);
         }
     });
 
-    // Cierra el menú si se hace clic fuera
     document.addEventListener("click", function (e) {
         if (!cvDropdown.contains(e.target)) {
             cvDropdown.classList.remove("show");
@@ -538,17 +550,14 @@ if (audio && musicBtn) {
     audio.loop = true;
     audio.volume = isMobile ? 0.2 : isNetbook ? 0.4 : 0.5;
 
-    // Configuración para móvil y netbook
     if (isMobile || isNetbook) {
-        audio.preload = "none"; // No precargar para ahorrar recursos
+        audio.preload = "none";
     }
 
-    // Primer click en cualquier lugar de la ventana
     const enableAudio = () => {
         if (!musicBtn.checked) {
             audio.play().catch(err => {
                 console.log('Error playing audio:', err);
-                // Ocultar el botón de música si falla
                 const musicContainer = document.querySelector('.music-container');
                 if (musicContainer) {
                     musicContainer.style.display = 'none';
@@ -558,11 +567,9 @@ if (audio && musicBtn) {
         }
     };
 
-    //touchend para mejor compatibilidad móvil
     window.addEventListener('click', enableAudio, { once: true });
     window.addEventListener('touchend', enableAudio, { once: true });
 
-    // Toggle cuando se hace click en el botón
     musicBtn.addEventListener("change", () => {
         if (musicBtn.checked) {
             audio.play().catch(err => console.log('Error playing audio:', err));
@@ -570,15 +577,13 @@ if (audio && musicBtn) {
             audio.pause();
         }
 
-        // Haptic feedback
         if (navigator.vibrate) {
             navigator.vibrate(20);
         }
     });
 }
 
-// Performance monitoring (solo en desarrollo)
+// Performance monitoring
 console.log('🚀 Portafolio cargado correctamente');
 console.log('📱 Dispositivo:', isMobile ? 'Móvil' : isNetbook ? 'Netbook' : 'Desktop');
 console.log('💡 Tip: Prueba usar las flechas del teclado para navegar (desktop)');
-//  console.log('🌙 Tip: Haz scroll para ver el efecto fade en la luna (desktop)');
